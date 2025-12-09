@@ -23,6 +23,11 @@ public final class PessoaJuridica extends Candidato {
     }
 
     @Override
+    public String getDisplayName() {
+        return razaoSocial;
+    }
+
+    @Override
     public String toString() {
         return String.format("""
                 === Candidato ===

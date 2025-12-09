@@ -21,6 +21,11 @@ public final class PessoaFisica extends Candidato {
     }
 
     @Override
+    public String getDisplayName() {
+        return nome;
+    }
+
+    @Override
     public String toString() {
         return String.format("""
                 === Candidato ===

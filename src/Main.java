@@ -5,7 +5,6 @@ import java.util.*;
 public class Main {
     private static final List<Candidato> candidatos = new ArrayList<>();
     private static final List<Eleitor> eleitores = new ArrayList<>();
-    private static final Map<Candidato, List<Voto>> votosMap = new HashMap<>();
     private static final Scanner sc = new Scanner(System.in);
 
     private static void cadastrarCandidato() {
@@ -46,7 +45,6 @@ public class Main {
                     throw new IllegalArgumentException("Documento invalido");
 
                 candidatos.add(candidato);
-                votosMap.put(candidato, new ArrayList<>());
             } catch (IllegalArgumentException e) {
                 System.out.println("Erro ao cadastrar Pessoa Fisica");
                 System.out.println(e.getMessage());
@@ -64,7 +62,6 @@ public class Main {
                     throw new IllegalArgumentException("Documento invalido");
 
                 candidatos.add(candidato);
-                votosMap.put(candidato, new ArrayList<>());
             } catch (IllegalArgumentException e) {
                 System.out.println("Erro ao cadastrar Pessoa Juridica");
                 System.out.println(e.getMessage());
@@ -122,14 +119,14 @@ public class Main {
         }
 
         Voto voto = new Voto(candidato, eleitor);
-        List<Voto> votosCandidato = votosMap.get(candidato);
+        List<Voto> votosCandidato = candidato.getVotos();
         votosCandidato.add(voto);
     }
 
     private static void imprimirVotos() {
         System.out.println("Total de votos: " + Voto.getQuantidadeVotosTotais());
         System.out.println("Votos por candidato:");
-        votosMap.forEach((candidato, votos) -> System.out.printf("%s: %d", candidato.getDocumento(), votos.size()));
+        candidatos.forEach(candidato -> System.out.printf("%s: %d\n", candidato.getDisplayName(), candidato.getVotos().size()));
     }
 
     public static void main(String[] args) {
