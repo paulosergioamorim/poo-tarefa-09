@@ -40,10 +40,6 @@ public class Main {
 
             try {
                 Candidato candidato = new PessoaFisica(documento, estadoOpt.get(), patrimonio, nome, sobrenome);
-
-                if (candidato.documentoEhInvalido())
-                    throw new IllegalArgumentException("Documento invalido");
-
                 candidatos.add(candidato);
             } catch (IllegalArgumentException e) {
                 System.out.println("Erro ao cadastrar Pessoa Fisica");
@@ -57,10 +53,6 @@ public class Main {
 
             try {
                 Candidato candidato = new PessoaJuridica(documento, estadoOpt.get(), patrimonio, razaoSocial);
-
-                if (candidato.documentoEhInvalido())
-                    throw new IllegalArgumentException("Documento invalido");
-
                 candidatos.add(candidato);
             } catch (IllegalArgumentException e) {
                 System.out.println("Erro ao cadastrar Pessoa Juridica");
@@ -113,14 +105,14 @@ public class Main {
         Eleitor eleitor = eleitorOpt.get();
         Candidato candidato = candidatoOpt.get();
 
-        if (!eleitor.podeVotarEm(candidato)) {
-            System.out.println("O eleitor nao pode votar nesse candidato");
-            return;
+        try {
+            Voto voto = new Voto(candidato, eleitor);
+            List<Voto> votosCandidato = candidato.getVotos();
+            votosCandidato.add(voto);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erro ao cadastrar Voto");
+            System.out.println(e.getMessage());
         }
-
-        Voto voto = new Voto(candidato, eleitor);
-        List<Voto> votosCandidato = candidato.getVotos();
-        votosCandidato.add(voto);
     }
 
     private static void imprimirVotos() {

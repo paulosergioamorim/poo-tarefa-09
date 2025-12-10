@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Candidato {
-    private final String documento;
+    private String documento;
     private final Estado estado;
     private double patrimonio;
     private final List<Voto> votos =  new ArrayList<>();
@@ -38,8 +38,15 @@ public abstract class Candidato {
         this.patrimonio = patrimonio;
     }
 
-    public Candidato(String documento, Estado estado, double patrimonio) {
+    public void setDocumento(String documento) {
         this.documento = documento;
+
+        if (documentoEhInvalido())
+            throw new IllegalArgumentException("O documento eh invalido");
+    }
+
+    public Candidato(String documento, Estado estado, double patrimonio) {
+        setDocumento(documento);
         this.estado = estado;
         setPatrimonio(patrimonio);
     }
